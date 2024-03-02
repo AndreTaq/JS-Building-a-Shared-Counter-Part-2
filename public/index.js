@@ -9,13 +9,35 @@ async function main(){
     
     let countValue = result.value;
 
-    function increment(){
-        countValue++;
+    async function increment() {
+        const response = await fetch('http://localhost:9001/counter', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            value: countValue + 1,
+          }),
+        });
+        let responseObject = await response.json();
+        console.log(responseObject);
+        countValue = responseObject.value;
         countContainer.textContent = countValue;
-    }
-
-    function decrement(){
-        countValue--;
+      }
+      
+    async function decrement(){
+        const response = await fetch('http://localhost:9001/counter', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              value: countValue - 1,
+            }),
+          });
+          let responseObject = await response.json();
+          console.log(responseObject);
+          countValue = responseObject.value;
         countContainer.textContent = countValue;
     }
 
